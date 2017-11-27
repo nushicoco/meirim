@@ -7,7 +7,7 @@ import loginActions                              from '../../redux/actions/login
 import LoginForm                                from '../LoginForm/LoginForm';
 import { Form}                                  from 'antd';
 import 'antd/dist/antd.css';
-
+import { Redirect }                             from 'react-router';
 
 class LoginContainer extends Component {
 
@@ -32,7 +32,11 @@ class LoginContainer extends Component {
 
     render() {
         const WrappedNormalLoginForm = Form.create()(LoginForm);
-
+        if(this.props.response == "success"){
+        return(
+           <Redirect push to="/"/>)
+        }
+        else
         return (
             <div className='signin-container content-main-center'>
 
