@@ -15,7 +15,7 @@
     "webpack": "^3.5.5"
   },
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "node ./node_modules/webpack-dev-server/bin/webpack-dev-server.js  --open",
     "dev": "node ./build-scripts/dev.js",
     "prod": "node ./build-scripts/prod.js"
   },
@@ -38,7 +38,7 @@
     "sass-loader": "^6.0.6",
     "source-map-loader": "^0.2.3",
     "style-loader": "^0.18.2",
-    "webpack-dev-server": "^2.9.4",
+    "webpack-dev-server": "^2.9.5",
     "webpack-merge": "^4.1.1"
   }
 }
