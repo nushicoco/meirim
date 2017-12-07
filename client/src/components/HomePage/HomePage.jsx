@@ -13,7 +13,7 @@ const HomePage = () => {
 					<span style={{color: '#0000CC'}}> לדירת יוקרה?</span>
 				</h1>
 			</div>
-			<div class="about-us">
+			<div className="about-us">
 				<strong>קצת על מעירים</strong>
 				<br/>
 				מעירים פועלים לשינוי סדר היום במערכת התכנון, חתירה
