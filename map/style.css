@@ -55,7 +55,7 @@ html {
 }
 
 .side-nav .headText {
-  padding-top: 0 15px 10px 0;
+  padding: 0 15px 10px 0;
   line-height:1.2;
 }
 
@@ -169,3 +169,4 @@ li.description {
 }
 .search-results a:hover {
   background-color: lightgrey;
+}

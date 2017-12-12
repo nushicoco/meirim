@@ -28,4 +28,4 @@ export default class SimpleExample extends Component {
   }
 }
 
-module export map;
+module.exports = map;

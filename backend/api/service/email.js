@@ -67,7 +67,10 @@ class Email {
   };
 
   newAlert(person, alert) {
-    let templateProperties = Object.assign(person.toJSON(), plan.toJSON());
+    let templateProperties = {
+        "email":person.email,
+        "url": Config.get("general.domain") + "alerts/unsubscribe/?token=" + alert.unsubscribeAlertToken(person.email)
+    };
     return this.sendWithTemplate(this.templates.newAlert, templateProperties);
   };
 

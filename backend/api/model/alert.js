@@ -3,6 +3,7 @@ const Checkit = require('checkit');
 const Promise = require('bluebird');
 const Model = require("./base_model");
 const Person = require("./person");
+const Crypt = require('../helpers/crypt');
 const Bookshelf = require('../service/database').Bookshelf;
 const Knex = require('../service/database').Knex;
 const Geocoder = require("../service/geocoder").geocoder;
@@ -80,6 +81,51 @@ class Alert extends Model {
   getCollection() {
     return this.collection().query('where', {person_id: this.get("person_id")}).fetch();
   }
+
+  unsubscribeAlertToken(person_email) {
+      let data = this.get('person_id')+"_"+this.get('id')+"_"+person_email;
+      // this.getUserEmailById(this.get('person_id')).then(res => {
+      // let data = this.get('person_id')+"_"+this.get('id')+"_"+res;
+      let token = Crypt.encrypt(data);
+      return new Buffer(token).toString('base64');
+      // });
+
+  }
+
+    // getUserEmailById(person_id) {
+    //
+    //     return Person.collection().query((qb) => {
+    //         qb.innerJoin('alert', 'alert.person_id', 'person.id')
+    //             .where("person.id", "=", person_id)
+    //             .groupBy("person.id")
+    //     }).fetch().then(person=>{
+    //         return person[0].get('email');
+    //     });
+
+        // return Alert.forge({
+        //     "person_id":person_id
+        // }).fetch().then(alert=>{
+        //     if (!alert){
+        //         Log.debug("resetPasswordByToken:Person",parts[0], "not found");
+        //         throw new Exception.badRequest("Invalid token");
+        //     }
+        //     alert.set("address",'test');
+        //     return alert.save();
+        // }).then(alert=>{
+        //     return alert.get('address');
+        // });
+    // }
+
+    static removeAlertbyToken(token) {
+        let details = Crypt.decrypt(new Buffer(token, 'base64').toString('ascii'));
+        let parts = details.split("_");
+        if (parts.length !== 3){
+            throw new Exception.badRequest("Invalid token");
+        }
+        this.query(qb => { qb.whereIn('id', parts[1]) }).destroy().then(() => {
+            return true;
+        });
+    }
 
   static getUsersByGeometry(plan_id) {
     return Person.collection().query((qb) => {
