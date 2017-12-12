@@ -20,12 +20,12 @@ class ResetPasswordContainer extends Component {
 	}
 
 	render() {
-		const WrappedNormalResetPasswordForm = Form.create()(ResetPasswordForm);
+		// const WrappedNormalResetPasswordForm = Form.create()(ResetPasswordForm);
 
 		return (
 			<div className='signin-container content-main-center'>
 
-				<WrappedNormalResetPasswordForm onSubmit={this.props.onCreateNewPassword}
+				<ResetPasswordForm onSubmit={this.props.onCreateNewPassword}
 												password={this.state.password}
 												errorMessage={this.props.response}
 				/>
