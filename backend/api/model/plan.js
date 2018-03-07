@@ -11,12 +11,12 @@ class Plan extends Model {
   get rules() {
     return {
       sent: 'integer',
-      OBJECTID: [
+      mavat_object_id: [
         'required', 'integer',
       ],
-      PLAN_COUNTY_NAME: 'string',
-      PL_NUMBER: 'string',
-      PL_NAME: 'string',
+      mavat_county_name: 'string',
+      mavat_pl_number: 'string',
+      mavat_pl_name: 'string',
       // PLAN_CHARACTOR_NAME: 'string',
       data: ['required'],
       geom: ['required', 'object'],
@@ -25,7 +25,7 @@ class Plan extends Model {
   }
 
   defaults() {
-    return {sent: 0};
+    return { sent: 0 };
   }
 
   format(attributes) {
@@ -79,19 +79,19 @@ class Plan extends Model {
       qb.whereIn('id', plan_ids);
     }).save({
       sent: '2',
-    }, {method: 'update'});
+    }, { method: 'update' });
   }
 
   static fetchByObjectID(objectID) {
-    return Plan.forge({'OBJECTID': objectID}).fetch();
+    return Plan.forge({ 'mavat_object_id': objectID }).fetch();
   }
 
   static buildFromIPlan(iPlan) {
     return Plan.forge({
-      'OBJECTID': iPlan.properties.OBJECTID,
-      'PLAN_COUNTY_NAME': iPlan.properties.PLAN_COUNTY_NAME || '',
-      'PL_NUMBER': iPlan.properties.PL_NUMBER || '',
-      'PL_NAME': iPlan.properties.PL_NAME || '',
+      'mavat_object_id': iPlan.properties.OBJECTID,
+      'mavat_county_name': iPlan.properties.PLAN_COUNTY_NAME || '',
+      'mavat_pl_number': iPlan.properties.PL_NUMBER || '',
+      'mavat_pl_name': iPlan.properties.PL_NAME || '',
       // 'PLAN_CHARACTOR_NAME': iPlan.properties.PLAN_CHARACTOR_NAME || '',
       'data': iPlan.properties,
       'geom': iPlan.geometry,
@@ -109,8 +109,8 @@ class Plan extends Model {
 
   static getUnsentPlans(userOptions) {
     let options = userOptions
-        ? userOptions
-        : {};
+      ? userOptions
+      : {};
     if (!options.limit) {
       options.limit = 1;
     }
@@ -122,7 +122,7 @@ class Plan extends Model {
       }
     }).fetchPage({
       pageSize: options.limit,
-      columns: ['id', 'data','goals_from_mavat',' 	main_details_from_mavat', Knex.raw('X(st_centroid(geom)) as lon'), Knex.raw('Y(st_centroid(geom)) as lat')],
+      columns: ['id', 'data', 'goals_from_mavat', ' 	main_details_from_mavat', Knex.raw('X(st_centroid(geom)) as lon'), Knex.raw('Y(st_centroid(geom)) as lat')],
     });
   }
 };
